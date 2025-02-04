@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+enum CharacterDetailsModels {
+    struct Request {
+        let character: CharactersListModels.CharacterViewModel
+    }
+
+    struct Response {
+        let character: CharactersListModels.CharacterViewModel
+    }
+
+    struct ViewModel {
+        let name: String
+        let imageURL: String
+        let description: String
+    }
+}

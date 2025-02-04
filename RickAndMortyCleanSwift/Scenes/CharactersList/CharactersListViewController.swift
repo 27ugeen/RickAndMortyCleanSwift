@@ -12,8 +12,8 @@ protocol CharactersListDisplayLogic: AnyObject {
 }
 
 final class CharactersListViewController: UIViewController, CharactersListDisplayLogic {
-    var interactor: CharactersListBusinessLogic?
-    var router: CharactersListRoutingLogic?
+    private let interactor: CharactersListBusinessLogic
+    private let router: CharactersListRoutingLogic
     private var characters: [CharactersListModels.CharacterViewModel] = []
 
     private let tableView: UITableView = {
@@ -24,15 +24,21 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
         tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.reuseIdentifier)
         return tableView
     }()
+    
+    init(interactor: CharactersListBusinessLogic, router: CharactersListRoutingLogic) {
+        self.interactor = interactor
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor?.fetchCharacters()
-        
-        let router = CharactersListRouter()
-        router.viewController = self
-        self.router = router
+        interactor.fetchCharacters()
     }
     
     private func setupUI() {
@@ -73,6 +79,6 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character = characters[indexPath.row]
-        router?.routeToDetails(for: character)
+        router.routeToDetails(for: character)
     }
 }

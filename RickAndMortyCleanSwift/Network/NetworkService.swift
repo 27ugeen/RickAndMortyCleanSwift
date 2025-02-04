@@ -7,9 +7,19 @@
 
 import Foundation
 
-final class NetworkService {
-    private let baseURL = "https://rickandmortyapi.com/api"
-    
+protocol NetworkServiceProtocol {
+    func fetchCharacters(completion: @escaping (Result<[RMCharacter], NetworkService.NetworkError>) -> Void)
+}
+
+final class NetworkService: NetworkServiceProtocol {
+    private let baseURL: String
+    private let session: URLSession
+
+    init(baseURL: String = "https://rickandmortyapi.com/api", session: URLSession = .shared) {
+        self.baseURL = baseURL
+        self.session = session
+    }
+
     enum NetworkError: Error {
         case invalidURL
         case requestFailed
@@ -22,7 +32,7 @@ final class NetworkService {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        session.dataTask(with: url) { data, response, error in
             if error != nil {
                 completion(.failure(.requestFailed))
                 return

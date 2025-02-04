@@ -13,10 +13,14 @@ protocol CharactersListRoutingLogic {
 
 final class CharactersListRouter: CharactersListRoutingLogic {
     weak var viewController: UIViewController?
+    private let detailsFactory: CharacterDetailsFactoryProtocol
+
+    init(detailsFactory: CharacterDetailsFactoryProtocol) {
+        self.detailsFactory = detailsFactory
+    }
 
     func routeToDetails(for character: CharactersListModels.CharacterViewModel) {
-        let detailsVC = CharacterDetailsViewController()
-        detailsVC.character = character
+        let detailsVC = detailsFactory.createCharacterDetailsModule(character: character)
         viewController?.navigationController?.pushViewController(detailsVC, animated: true)
     }
 }

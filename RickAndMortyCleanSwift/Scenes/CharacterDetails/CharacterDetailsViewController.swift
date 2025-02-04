@@ -7,8 +7,14 @@
 
 import UIKit
 
-final class CharacterDetailsViewController: UIViewController {
-    var character: CharactersListModels.CharacterViewModel?
+protocol CharacterDetailsDisplayLogic: AnyObject {
+    func displayCharacterDetails(viewModel: CharacterDetailsModels.ViewModel)
+}
+
+final class CharacterDetailsViewController: UIViewController, CharacterDetailsDisplayLogic {
+    private let interactor: CharacterDetailsBusinessLogic
+    private let router: CharacterDetailsRoutingLogic
+    private let character: CharactersListModels.CharacterViewModel
 
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -24,27 +30,40 @@ final class CharacterDetailsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    private let descriptionLabel: UILabel = {
+
+    private let detailsLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    init(interactor: CharacterDetailsBusinessLogic,
+         router: CharacterDetailsRoutingLogic,
+         character: CharactersListModels.CharacterViewModel) {
+        self.interactor = interactor
+        self.router = router
+        self.character = character
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        return nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        displayCharacterDetails()
+        interactor.fetchCharacterDetails(request: CharacterDetailsModels.Request(character: character))
     }
 
     private func setupUI() {
         view.addSubview(nameLabel)
         view.addSubview(imageView)
-        view.addSubview(descriptionLabel)
+        view.addSubview(detailsLabel)
 
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -56,23 +75,20 @@ final class CharacterDetailsViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 200),
             imageView.heightAnchor.constraint(equalToConstant: 200),
 
-            descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            detailsLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+            detailsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            detailsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
 
-    private func displayCharacterDetails() {
-        nameLabel.text = character?.name
-        descriptionLabel.text = character?.description
+    func displayCharacterDetails(viewModel: CharacterDetailsModels.ViewModel) {
+        nameLabel.text = viewModel.name
+        detailsLabel.text = viewModel.description
 
-        if let urlString = character?.imageURL, let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) { data, _, _ in
-                guard let data = data, let image = UIImage(data: data) else { return }
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                }
-            }.resume()
+        ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.imageView.image = image
+            }
         }
     }
 }

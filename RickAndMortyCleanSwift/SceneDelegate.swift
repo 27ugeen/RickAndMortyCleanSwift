@@ -15,13 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let viewController = CharactersListViewController()
-        let interactor = CharactersListInteractor()
-        let presenter = CharactersListPresenter()
         
-        viewController.interactor = interactor
+        let detailsFactory = CharacterDetailsFactory()
+        let router = CharactersListRouter(detailsFactory: detailsFactory)
+        let networkService = NetworkService()
+        let interactor = CharactersListInteractor(networkService: networkService)
+        let presenter = CharactersListPresenter()
+
+        let viewController = CharactersListViewController(interactor: interactor, router: router)
+
         interactor.presenter = presenter
         presenter.viewController = viewController
+        router.viewController = viewController
         
         window.rootViewController = UINavigationController(rootViewController: viewController)
         window.makeKeyAndVisible()

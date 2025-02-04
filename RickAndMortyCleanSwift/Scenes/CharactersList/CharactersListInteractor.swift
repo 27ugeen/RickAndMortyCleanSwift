@@ -13,7 +13,11 @@ protocol CharactersListBusinessLogic {
 
 final class CharactersListInteractor: CharactersListBusinessLogic {
     var presenter: CharactersListPresentationLogic?
-    private let networkService = NetworkService()
+    private let networkService: NetworkServiceProtocol
+    
+    init(networkService: NetworkServiceProtocol) {
+        self.networkService = networkService
+    }
     
     func fetchCharacters() {
         networkService.fetchCharacters { [weak self] result in
