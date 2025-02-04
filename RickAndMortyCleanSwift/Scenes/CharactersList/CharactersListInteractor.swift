@@ -19,11 +19,13 @@ final class CharactersListInteractor: CharactersListBusinessLogic {
         networkService.fetchCharacters { [weak self] result in
             switch result {
             case .success(let characters):
+                CoreDataManager.shared.saveCharacters(characters)
                 let response = CharactersListModels.Response(characters: characters)
                 self?.presenter?.presentCharacters(response: response)
             case .failure:
-                // Обробка помилки
-                break
+                let cachedCharacters = CoreDataManager.shared.fetchCharacters()
+                let response = CharactersListModels.Response(characters: cachedCharacters)
+                self?.presenter?.presentCharacters(response: response)
             }
         }
     }
