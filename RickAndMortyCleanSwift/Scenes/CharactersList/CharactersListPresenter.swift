@@ -19,7 +19,8 @@ final class CharactersListPresenter: CharactersListPresentationLogic {
             CharactersListModels.CharacterViewModel(
                 id: $0.id,
                 name: $0.name,
-                imageURL: $0.image
+                imageURL: $0.image,
+                description: "Status: \($0.status), Species: \($0.species)"
             )
         }
         let viewModel = CharactersListModels.ViewModel(characters: viewModels)

@@ -15,6 +15,8 @@ struct RMCharacter: Decodable {
     let id: Int
     let name: String
     let image: String
+    let status: String
+    let species: String
 }
 
 enum CharactersListModels {
@@ -30,5 +32,6 @@ enum CharactersListModels {
         let id: Int
         let name: String
         let imageURL: String
+        let description: String
     }
 }

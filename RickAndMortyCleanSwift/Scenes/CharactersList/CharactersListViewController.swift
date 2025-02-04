@@ -13,6 +13,7 @@ protocol CharactersListDisplayLogic: AnyObject {
 
 final class CharactersListViewController: UIViewController, CharactersListDisplayLogic {
     var interactor: CharactersListBusinessLogic?
+    var router: CharactersListRoutingLogic?
     private var characters: [CharactersListModels.CharacterViewModel] = []
 
     private let tableView: UITableView = {
@@ -28,6 +29,10 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
         super.viewDidLoad()
         setupUI()
         interactor?.fetchCharacters()
+        
+        let router = CharactersListRouter()
+        router.viewController = self
+        self.router = router
     }
     
     private func setupUI() {
@@ -64,5 +69,10 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
         let character = characters[indexPath.row]
         cell.configure(with: character)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let character = characters[indexPath.row]
+        router?.routeToDetails(for: character)
     }
 }
