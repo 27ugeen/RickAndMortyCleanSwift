@@ -53,17 +53,15 @@ final class CharacterTableViewCell: UITableViewCell {
             contentView.bottomAnchor.constraint(greaterThanOrEqualTo: characterImageView.bottomAnchor, constant: 8)
         ])
     }
-
+    
     func configure(with character: CharactersListModels.CharacterViewModel) {
         nameLabel.text = character.name
-
-        if let url = URL(string: character.imageURL) {
-            URLSession.shared.dataTask(with: url) { data, _, _ in
-                guard let data = data, let image = UIImage(data: data) else { return }
-                DispatchQueue.main.async {
-                    self.characterImageView.image = image
-                }
-            }.resume()
+        characterImageView.image = nil
+        
+        ImageLoader.shared.loadImage(from: character.imageURL) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.characterImageView.image = image
+            }
         }
     }
 }

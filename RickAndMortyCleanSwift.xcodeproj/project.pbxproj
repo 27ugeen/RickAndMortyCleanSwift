@@ -25,6 +25,7 @@
 		110325782D5218E700EAD400 /* CharacterDetailsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325772D5218E700EAD400 /* CharacterDetailsModels.swift */; };
 		1103257A2D52197A00EAD400 /* CharactersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325792D52197A00EAD400 /* CharactersListViewController.swift */; };
 		1103257C2D5221E200EAD400 /* CharacterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103257B2D5221E200EAD400 /* CharacterTableViewCell.swift */; };
+		110325822D5244FB00EAD400 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325812D5244FB00EAD400 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		110325772D5218E700EAD400 /* CharacterDetailsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsModels.swift; sourceTree = "<group>"; };
 		110325792D52197A00EAD400 /* CharactersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListViewController.swift; sourceTree = "<group>"; };
 		1103257B2D5221E200EAD400 /* CharacterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTableViewCell.swift; sourceTree = "<group>"; };
+		110325812D5244FB00EAD400 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,12 +82,12 @@
 		110325432D52136500EAD400 /* RickAndMortyCleanSwift */ = {
 			isa = PBXGroup;
 			children = (
+				110325442D52136500EAD400 /* AppDelegate.swift */,
+				110325462D52136500EAD400 /* SceneDelegate.swift */,
 				1103255B2D52155600EAD400 /* Scenes */,
 				1103255C2D52156500EAD400 /* Network */,
 				1103255D2D52157400EAD400 /* CoreData */,
 				1103255E2D52158500EAD400 /* Helpers */,
-				110325442D52136500EAD400 /* AppDelegate.swift */,
-				110325462D52136500EAD400 /* SceneDelegate.swift */,
 				110325502D52136600EAD400 /* Assets.xcassets */,
 				110325522D52136600EAD400 /* LaunchScreen.storyboard */,
 				110325552D52136600EAD400 /* Info.plist */,
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				1103256B2D52185600EAD400 /* NetworkService.swift */,
+				110325812D5244FB00EAD400 /* ImageLoader.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				110325452D52136500EAD400 /* AppDelegate.swift in Sources */,
 				110325662D52182100EAD400 /* CharactersListPresenter.swift in Sources */,
 				1103256A2D52183B00EAD400 /* CharactersListModels.swift in Sources */,
+				110325822D5244FB00EAD400 /* ImageLoader.swift in Sources */,
 				110325762D5218DD00EAD400 /* CharacterDetailsRouter.swift in Sources */,
 				1103254F2D52136500EAD400 /* RickAndMortyCleanSwift.xcdatamodeld in Sources */,
 				110325472D52136500EAD400 /* SceneDelegate.swift in Sources */,
