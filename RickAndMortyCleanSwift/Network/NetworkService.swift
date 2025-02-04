@@ -15,7 +15,7 @@ final class NetworkService: NetworkServiceProtocol {
     private let baseURL: String
     private let session: URLSession
 
-    init(baseURL: String = "https://rickandmortyapi.com/api", session: URLSession = .shared) {
+    init(baseURL: String = APIConstants.baseURL, session: URLSession = .shared) {
         self.baseURL = baseURL
         self.session = session
     }
@@ -24,6 +24,8 @@ final class NetworkService: NetworkServiceProtocol {
         case invalidURL
         case requestFailed
         case decodingFailed
+        case invalidResponse
+        case statusCode(Int)
     }
     
     func fetchCharacters(completion: @escaping (Result<[RMCharacter], NetworkError>) -> Void) {
@@ -32,9 +34,31 @@ final class NetworkService: NetworkServiceProtocol {
             return
         }
         
+        performRequest(url: url) { (result: Result<CharacterList, NetworkError>) in
+            switch result {
+            case .success(let characterList):
+                completion(.success(characterList.results))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    private func performRequest<T: Decodable>(url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
         session.dataTask(with: url) { data, response, error in
-            if error != nil {
+            if let error {
+                print("❌ Network Error:", error.localizedDescription)
                 completion(.failure(.requestFailed))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(.failure(.invalidResponse))
+                return
+            }
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                completion(.failure(.statusCode(httpResponse.statusCode)))
                 return
             }
             
@@ -44,9 +68,10 @@ final class NetworkService: NetworkServiceProtocol {
             }
             
             do {
-                let decodedResponse = try JSONDecoder().decode(CharacterList.self, from: data)
-                completion(.success(decodedResponse.results))
+                let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(decodedResponse))
             } catch {
+                print("❌ Decoding Error:", error)
                 completion(.failure(.decodingFailed))
             }
         }.resume()
