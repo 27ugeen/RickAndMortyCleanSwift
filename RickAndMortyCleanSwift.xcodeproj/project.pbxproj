@@ -24,6 +24,7 @@
 		110325762D5218DD00EAD400 /* CharacterDetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325752D5218DD00EAD400 /* CharacterDetailsRouter.swift */; };
 		110325782D5218E700EAD400 /* CharacterDetailsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325772D5218E700EAD400 /* CharacterDetailsModels.swift */; };
 		1103257A2D52197A00EAD400 /* CharactersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325792D52197A00EAD400 /* CharactersListViewController.swift */; };
+		1103257C2D5221E200EAD400 /* CharacterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103257B2D5221E200EAD400 /* CharacterTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		110325752D5218DD00EAD400 /* CharacterDetailsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsRouter.swift; sourceTree = "<group>"; };
 		110325772D5218E700EAD400 /* CharacterDetailsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsModels.swift; sourceTree = "<group>"; };
 		110325792D52197A00EAD400 /* CharactersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListViewController.swift; sourceTree = "<group>"; };
+		1103257B2D5221E200EAD400 /* CharacterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				110325672D52182F00EAD400 /* CharactersListRouter.swift */,
 				110325692D52183B00EAD400 /* CharactersListModels.swift */,
 				110325792D52197A00EAD400 /* CharactersListViewController.swift */,
+				1103257B2D5221E200EAD400 /* CharacterTableViewCell.swift */,
 			);
 			path = CharactersList;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				110325742D5218D100EAD400 /* CharacterDetailsPresenter.swift in Sources */,
 				1103257A2D52197A00EAD400 /* CharactersListViewController.swift in Sources */,
 				110325702D5218AF00EAD400 /* CharacterDetailsViewController.swift in Sources */,
+				1103257C2D5221E200EAD400 /* CharacterTableViewCell.swift in Sources */,
 				110325452D52136500EAD400 /* AppDelegate.swift in Sources */,
 				110325662D52182100EAD400 /* CharactersListPresenter.swift in Sources */,
 				1103256A2D52183B00EAD400 /* CharactersListModels.swift in Sources */,

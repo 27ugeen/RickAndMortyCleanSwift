@@ -17,7 +17,10 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
 
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CharacterCell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 60
+        tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.reuseIdentifier)
         return tableView
     }()
 
@@ -26,12 +29,18 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
         setupUI()
         interactor?.fetchCharacters()
     }
-
+    
     private func setupUI() {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.frame = view.bounds
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     func displayCharacters(viewModel: CharactersListModels.ViewModel) {
@@ -48,10 +57,12 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.reuseIdentifier, for: indexPath) as? CharacterTableViewCell else {
+            return UITableViewCell()
+        }
+
         let character = characters[indexPath.row]
-        cell.textLabel?.text = character.name
-        // TODO: Додати завантаження зображення
+        cell.configure(with: character)
         return cell
     }
 }
