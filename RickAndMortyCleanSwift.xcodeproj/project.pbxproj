@@ -28,6 +28,8 @@
 		110325822D5244FB00EAD400 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325812D5244FB00EAD400 /* ImageLoader.swift */; };
 		110325842D5255F300EAD400 /* CharacterDetailsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325832D5255F300EAD400 /* CharacterDetailsFactory.swift */; };
 		110325872D526C4300EAD400 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325862D526C4300EAD400 /* APIConstants.swift */; };
+		110325892D52703400EAD400 /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325882D52703400EAD400 /* CharacterDetailsView.swift */; };
+		1103258B2D52725500EAD400 /* CharactersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103258A2D52725500EAD400 /* CharactersListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		110325812D5244FB00EAD400 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		110325832D5255F300EAD400 /* CharacterDetailsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsFactory.swift; sourceTree = "<group>"; };
 		110325862D526C4300EAD400 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		110325882D52703400EAD400 /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
+		1103258A2D52725500EAD400 /* CharactersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				110325792D52197A00EAD400 /* CharactersListViewController.swift */,
+				1103258A2D52725500EAD400 /* CharactersListView.swift */,
 				110325632D52181000EAD400 /* CharactersListInteractor.swift */,
 				110325652D52182100EAD400 /* CharactersListPresenter.swift */,
 				110325672D52182F00EAD400 /* CharactersListRouter.swift */,
@@ -151,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				1103256F2D5218AF00EAD400 /* CharacterDetailsViewController.swift */,
+				110325882D52703400EAD400 /* CharacterDetailsView.swift */,
 				110325712D5218C500EAD400 /* CharacterDetailsInteractor.swift */,
 				110325732D5218D100EAD400 /* CharacterDetailsPresenter.swift */,
 				110325752D5218DD00EAD400 /* CharacterDetailsRouter.swift */,
@@ -241,6 +247,7 @@
 				1103256C2D52185600EAD400 /* NetworkService.swift in Sources */,
 				110325722D5218C500EAD400 /* CharacterDetailsInteractor.swift in Sources */,
 				110325642D52181000EAD400 /* CharactersListInteractor.swift in Sources */,
+				110325892D52703400EAD400 /* CharacterDetailsView.swift in Sources */,
 				110325682D52182F00EAD400 /* CharactersListRouter.swift in Sources */,
 				110325742D5218D100EAD400 /* CharacterDetailsPresenter.swift in Sources */,
 				110325872D526C4300EAD400 /* APIConstants.swift in Sources */,
@@ -248,6 +255,7 @@
 				1103257A2D52197A00EAD400 /* CharactersListViewController.swift in Sources */,
 				110325702D5218AF00EAD400 /* CharacterDetailsViewController.swift in Sources */,
 				1103257C2D5221E200EAD400 /* CharacterTableViewCell.swift in Sources */,
+				1103258B2D52725500EAD400 /* CharactersListView.swift in Sources */,
 				110325452D52136500EAD400 /* AppDelegate.swift in Sources */,
 				110325662D52182100EAD400 /* CharactersListPresenter.swift in Sources */,
 				1103256A2D52183B00EAD400 /* CharactersListModels.swift in Sources */,

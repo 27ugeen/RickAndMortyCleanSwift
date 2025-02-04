@@ -15,16 +15,9 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
     private let interactor: CharactersListBusinessLogic
     private let router: CharactersListRoutingLogic
     private var characters: [CharactersListModels.CharacterViewModel] = []
-
-    private let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 60
-        tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.reuseIdentifier)
-        return tableView
-    }()
     
+    private let listView = CharactersListView()
+
     init(interactor: CharactersListBusinessLogic, router: CharactersListRoutingLogic) {
         self.interactor = interactor
         self.router = router
@@ -35,29 +28,25 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
         return nil
     }
 
+    override func loadView() {
+        view = listView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupTableView()
         interactor.fetchCharacters()
     }
     
-    private func setupUI() {
-        view.addSubview(tableView)
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+    private func setupTableView() {
+        listView.tableView.dataSource = self
+        listView.tableView.delegate = self
     }
 
     func displayCharacters(viewModel: CharactersListModels.ViewModel) {
         characters = viewModel.characters
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.listView.tableView.reloadData()
         }
     }
 }

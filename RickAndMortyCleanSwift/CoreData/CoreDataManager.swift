@@ -22,7 +22,7 @@ final class CoreDataManager {
         persistentContainer = NSPersistentContainer(name: "RickAndMortyCleanSwift")
         persistentContainer.loadPersistentStores { _, error in
             if let error {
-                fatalError("Unable to load persistent stores: \(error)")
+                print("❌ Core Data Error: Unable to load persistent stores: \(error.localizedDescription)")
             }
         }
     }
@@ -38,8 +38,7 @@ final class CoreDataManager {
             do {
                 try context.save()
             } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                print("❌ Core Data Save Error: \(error.localizedDescription)")
             }
         }
     }
@@ -50,7 +49,7 @@ final class CoreDataManager {
             let results = try context.fetch(fetchRequest)
             print("Fetched \(results.count) characters from CoreData")
         } catch {
-            print("Failed to fetch: \(error)")
+            print("❌ Failed to fetch: \(error)")
         }
     }
 }
@@ -72,7 +71,7 @@ extension CoreDataManager {
             do {
                 try context.save()
             } catch {
-                print("Failed to save characters: \(error)")
+                print("❌ Failed to save characters: \(error)")
             }
         }
     }
@@ -92,7 +91,7 @@ extension CoreDataManager {
                 )
             }
         } catch {
-            print("Failed to fetch characters: \(error)")
+            print("❌ Failed to fetch characters: \(error)")
             return []
         }
     }
@@ -105,7 +104,7 @@ extension CoreDataManager {
             try persistentContainer.viewContext.execute(deleteRequest)
             try persistentContainer.viewContext.save()
         } catch {
-            print("Failed to clear characters: \(error)")
+            print("❌ Failed to clear characters: \(error)")
         }
     }
 }
