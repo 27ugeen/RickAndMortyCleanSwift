@@ -35,7 +35,7 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        interactor.fetchCharacters()
+        interactor.fetchCharacters(nextPage: false)
     }
     
     private func setupTableView() {
@@ -69,5 +69,12 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character = characters[indexPath.row]
         router.routeToDetails(for: character)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        guard position > scrollView.contentSize.height - scrollView.frame.size.height - 100 else { return }
+        guard NetworkMonitor.shared.isConnected, interactor.hasNextPage() else { return }
+        interactor.fetchCharacters(nextPage: true)
     }
 }

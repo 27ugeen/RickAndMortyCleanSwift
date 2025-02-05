@@ -8,7 +8,12 @@
 import Foundation
 
 struct CharacterList: Decodable {
+    let info: PageInfo
     let results: [RMCharacter]
+}
+
+struct PageInfo: Decodable {
+    let next: String?
 }
 
 struct RMCharacter: Decodable {

@@ -73,9 +73,7 @@ final class CharacterDetailsView: UIView {
         detailsLabel.text = viewModel.description
         
         ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.imageView.image = image
-            }
+            self?.imageView.image = image
         }
     }
 }
