@@ -79,7 +79,8 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character = characters[indexPath.row]
-        router.routeToDetails(for: character)
+        let request = CharacterDetailsModels.Request(id: character.id, name: character.name, imageURL: character.imageURL, description: character.description)
+        router.routeToDetails(for: request)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

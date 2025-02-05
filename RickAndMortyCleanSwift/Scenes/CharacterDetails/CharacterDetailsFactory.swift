@@ -8,15 +8,15 @@
 import UIKit
 
 protocol CharacterDetailsFactoryProtocol {
-    func createCharacterDetailsModule(character: CharactersListModels.CharacterViewModel) -> UIViewController
+    func createCharacterDetailsModule(request: CharacterDetailsModels.Request) -> UIViewController
 }
 
 final class CharacterDetailsFactory: CharacterDetailsFactoryProtocol {
-    func createCharacterDetailsModule(character: CharactersListModels.CharacterViewModel) -> UIViewController {
+    func createCharacterDetailsModule(request: CharacterDetailsModels.Request) -> UIViewController {
         let interactor = CharacterDetailsInteractor()
         let presenter = CharacterDetailsPresenter()
         let router = CharacterDetailsRouter()
-        let detailsVC = CharacterDetailsViewController(interactor: interactor, router: router, character: character)
+        let detailsVC = CharacterDetailsViewController(interactor: interactor, router: router, characterRequest: request)
 
         interactor.presenter = presenter
         presenter.viewController = detailsVC

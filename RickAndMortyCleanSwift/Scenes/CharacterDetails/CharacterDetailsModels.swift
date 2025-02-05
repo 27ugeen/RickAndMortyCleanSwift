@@ -9,11 +9,17 @@ import Foundation
 
 enum CharacterDetailsModels {
     struct Request {
-        let character: CharactersListModels.CharacterViewModel
+        let id: Int
+        let name: String
+        let imageURL: String
+        let description: String
     }
 
     struct Response {
-        let character: CharactersListModels.CharacterViewModel
+        let id: Int
+        let name: String
+        let imageURL: String
+        let description: String
     }
 
     struct ViewModel {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharactersListRoutingLogic {
-    func routeToDetails(for character: CharactersListModels.CharacterViewModel)
+    func routeToDetails(for request: CharacterDetailsModels.Request)
 }
 
 final class CharactersListRouter: CharactersListRoutingLogic {
@@ -19,8 +19,8 @@ final class CharactersListRouter: CharactersListRoutingLogic {
         self.detailsFactory = detailsFactory
     }
 
-    func routeToDetails(for character: CharactersListModels.CharacterViewModel) {
-        let detailsVC = detailsFactory.createCharacterDetailsModule(character: character)
+    func routeToDetails(for request: CharacterDetailsModels.Request) {
+        let detailsVC = detailsFactory.createCharacterDetailsModule(request: request)
         viewController?.navigationController?.pushViewController(detailsVC, animated: true)
     }
 }

@@ -14,16 +14,16 @@ protocol CharacterDetailsDisplayLogic: AnyObject {
 final class CharacterDetailsViewController: UIViewController, CharacterDetailsDisplayLogic {
     private let interactor: CharacterDetailsBusinessLogic
     private let router: CharacterDetailsRoutingLogic
-    private let character: CharactersListModels.CharacterViewModel
-    
+
     private let detailsView = CharacterDetailsView()
-    
+    private let characterRequest: CharacterDetailsModels.Request
+
     init(interactor: CharacterDetailsBusinessLogic,
          router: CharacterDetailsRoutingLogic,
-         character: CharactersListModels.CharacterViewModel) {
+         characterRequest: CharacterDetailsModels.Request) {
         self.interactor = interactor
         self.router = router
-        self.character = character
+        self.characterRequest = characterRequest
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,7 +38,7 @@ final class CharacterDetailsViewController: UIViewController, CharacterDetailsDi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        interactor.fetchCharacterDetails(request: CharacterDetailsModels.Request(character: character))
+        interactor.fetchCharacterDetails(request: characterRequest)
     }
 
     func displayCharacterDetails(viewModel: CharacterDetailsModels.ViewModel) {

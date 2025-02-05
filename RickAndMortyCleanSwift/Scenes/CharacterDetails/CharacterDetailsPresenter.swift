@@ -15,12 +15,11 @@ final class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
     weak var viewController: CharacterDetailsDisplayLogic?
 
     func presentCharacterDetails(response: CharacterDetailsModels.Response) {
-        let character = response.character
         let viewModel = CharacterDetailsModels.ViewModel(
-            id: character.id,
-            name: character.name,
-            imageURL: character.imageURL,
-            description: character.description
+            id: response.id,
+            name: response.name,
+            imageURL: response.imageURL,
+            description: response.description
         )
         viewController?.displayCharacterDetails(viewModel: viewModel)
     }
