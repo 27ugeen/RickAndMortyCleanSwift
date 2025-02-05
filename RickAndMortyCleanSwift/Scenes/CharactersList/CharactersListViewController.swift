@@ -9,14 +9,16 @@ import UIKit
 
 protocol CharactersListDisplayLogic: AnyObject {
     func displayCharacters(viewModel: CharactersListModels.ViewModel)
+    func setLoadingState(isLoading: Bool)
 }
 
 final class CharactersListViewController: UIViewController, CharactersListDisplayLogic {
     private let interactor: CharactersListBusinessLogic
     private let router: CharactersListRoutingLogic
-    private var characters: [CharactersListModels.CharacterViewModel] = []
     
     private let listView = CharactersListView()
+    private var characters: [CharactersListModels.CharacterViewModel] = []
+    private var isFetchingMoreData = false
 
     init(interactor: CharactersListBusinessLogic, router: CharactersListRoutingLogic) {
         self.interactor = interactor
@@ -45,8 +47,17 @@ final class CharactersListViewController: UIViewController, CharactersListDispla
 
     func displayCharacters(viewModel: CharactersListModels.ViewModel) {
         characters = viewModel.characters
+        isFetchingMoreData = false
         DispatchQueue.main.async {
+            self.setLoadingState(isLoading: false)
+            self.listView.setFooterLoadingState(isLoading: false)
             self.listView.tableView.reloadData()
+        }
+    }
+    
+    func setLoadingState(isLoading: Bool) {
+        DispatchQueue.main.async {
+            isLoading ? self.listView.activityIndicator.startAnimating() : self.listView.activityIndicator.stopAnimating()
         }
     }
 }
@@ -74,7 +85,10 @@ extension CharactersListViewController: UITableViewDataSource, UITableViewDelega
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         guard position > scrollView.contentSize.height - scrollView.frame.size.height - 100 else { return }
-        guard NetworkMonitor.shared.isConnected, interactor.hasNextPage() else { return }
+        guard !isFetchingMoreData, NetworkMonitor.shared.isConnected, interactor.hasNextPage() else { return }
+
+        isFetchingMoreData = true
+        listView.setFooterLoadingState(isLoading: true)
         interactor.fetchCharacters(nextPage: true)
     }
 }

@@ -33,6 +33,13 @@ final class CharacterTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -51,6 +58,7 @@ final class CharacterTableViewCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubview(characterImageView)
         contentView.addSubview(nameLabel)
+        contentView.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
             characterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: UIConstants.padding),
@@ -62,15 +70,20 @@ final class CharacterTableViewCell: UITableViewCell {
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -UIConstants.padding),
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
+            activityIndicator.centerXAnchor.constraint(equalTo: characterImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: characterImageView.centerYAnchor),
+            
             contentView.bottomAnchor.constraint(greaterThanOrEqualTo: characterImageView.bottomAnchor, constant: UIConstants.padding)
         ])
     }
     
     func configure(with character: CharactersListModels.CharacterViewModel) {
         nameLabel.text = character.name
+        activityIndicator.startAnimating()
         
         ImageLoader.shared.loadImage(from: character.imageURL) { [weak self] image in
             self?.characterImageView.image = image
+            self?.activityIndicator.stopAnimating()
         }
     }
 }
