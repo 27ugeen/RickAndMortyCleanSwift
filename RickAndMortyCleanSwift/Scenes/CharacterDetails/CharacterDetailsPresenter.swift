@@ -17,6 +17,7 @@ final class CharacterDetailsPresenter: CharacterDetailsPresentationLogic {
     func presentCharacterDetails(response: CharacterDetailsModels.Response) {
         let character = response.character
         let viewModel = CharacterDetailsModels.ViewModel(
+            id: character.id,
             name: character.name,
             imageURL: character.imageURL,
             description: character.description

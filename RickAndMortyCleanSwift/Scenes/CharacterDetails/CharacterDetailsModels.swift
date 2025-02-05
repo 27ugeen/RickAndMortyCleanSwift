@@ -17,6 +17,7 @@ enum CharacterDetailsModels {
     }
 
     struct ViewModel {
+        let id: Int
         let name: String
         let imageURL: String
         let description: String

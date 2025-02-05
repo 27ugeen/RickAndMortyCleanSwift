@@ -46,13 +46,13 @@ final class CharacterTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
+        return nil
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         characterImageView.image = nil
+        activityIndicator.stopAnimating()
     }
     
     private func setupUI() {
@@ -79,11 +79,23 @@ final class CharacterTableViewCell: UITableViewCell {
     
     func configure(with character: CharactersListModels.CharacterViewModel) {
         nameLabel.text = character.name
+        characterImageView.image = nil
         activityIndicator.startAnimating()
-        
-        ImageLoader.shared.loadImage(from: character.imageURL) { [weak self] image in
-            self?.characterImageView.image = image
-            self?.activityIndicator.stopAnimating()
+
+        if let cachedImage = ImageCacheManager.shared.loadImage(id: character.id) {
+            characterImageView.image = cachedImage
+            activityIndicator.stopAnimating()
+        } else {
+            ImageLoader.shared.loadImage(from: character.imageURL) { [weak self] image in
+                DispatchQueue.main.async {
+                    guard let self else { return }
+                    self.activityIndicator.stopAnimating()
+                    if let image {
+                        ImageCacheManager.shared.saveImage(image, id: character.id)
+                        self.characterImageView.image = image
+                    }
+                }
+            }
         }
     }
 }

@@ -71,9 +71,21 @@ final class CharacterDetailsView: UIView {
     func configure(with viewModel: CharacterDetailsModels.ViewModel) {
         nameLabel.text = viewModel.name
         detailsLabel.text = viewModel.description
-        
-        ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
-            self?.imageView.image = image
+
+        if let cachedImage = ImageCacheManager.shared.loadImage(id: viewModel.id) {
+            setImage(cachedImage)
+        } else {
+            ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
+                guard let self = self, let image = image else { return }
+                self.setImage(image)
+                ImageCacheManager.shared.saveImage(image, id: viewModel.id)
+            }
+        }
+    }
+
+    private func setImage(_ image: UIImage) {
+        DispatchQueue.main.async {
+            self.imageView.image = image
         }
     }
 }

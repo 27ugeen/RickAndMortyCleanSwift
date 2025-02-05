@@ -31,6 +31,7 @@
 		110325892D52703400EAD400 /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110325882D52703400EAD400 /* CharacterDetailsView.swift */; };
 		1103258B2D52725500EAD400 /* CharactersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103258A2D52725500EAD400 /* CharactersListView.swift */; };
 		1103258D2D528D6D00EAD400 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103258C2D528D6D00EAD400 /* NetworkMonitor.swift */; };
+		1103258F2D5382FE00EAD400 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1103258E2D5382FE00EAD400 /* ImageCacheManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		110325882D52703400EAD400 /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
 		1103258A2D52725500EAD400 /* CharactersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListView.swift; sourceTree = "<group>"; };
 		1103258C2D528D6D00EAD400 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		1103258E2D5382FE00EAD400 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +97,8 @@
 				110325442D52136500EAD400 /* AppDelegate.swift */,
 				110325462D52136500EAD400 /* SceneDelegate.swift */,
 				1103255B2D52155600EAD400 /* Scenes */,
-				1103255C2D52156500EAD400 /* Network */,
-				1103255D2D52157400EAD400 /* CoreData */,
+				1103255C2D52156500EAD400 /* Services */,
+				1103255D2D52157400EAD400 /* Managers */,
 				110325852D526C2700EAD400 /* Config */,
 				1103255E2D52158500EAD400 /* Helpers */,
 				110325502D52136600EAD400 /* Assets.xcassets */,
@@ -116,27 +118,28 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		1103255C2D52156500EAD400 /* Network */ = {
+		1103255C2D52156500EAD400 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				1103256B2D52185600EAD400 /* NetworkService.swift */,
 				110325812D5244FB00EAD400 /* ImageLoader.swift */,
 			);
-			path = Network;
+			path = Services;
 			sourceTree = "<group>";
 		};
-		1103255D2D52157400EAD400 /* CoreData */ = {
+		1103255D2D52157400EAD400 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				1103256D2D52186800EAD400 /* CoreDataManager.swift */,
+				1103258C2D528D6D00EAD400 /* NetworkMonitor.swift */,
+				1103258E2D5382FE00EAD400 /* ImageCacheManager.swift */,
 			);
-			path = CoreData;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		1103255E2D52158500EAD400 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1103258C2D528D6D00EAD400 /* NetworkMonitor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				110325472D52136500EAD400 /* SceneDelegate.swift in Sources */,
 				110325782D5218E700EAD400 /* CharacterDetailsModels.swift in Sources */,
 				1103256E2D52186800EAD400 /* CoreDataManager.swift in Sources */,
+				1103258F2D5382FE00EAD400 /* ImageCacheManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

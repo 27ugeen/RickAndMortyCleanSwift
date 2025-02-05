@@ -22,24 +22,23 @@ final class CoreDataManager {
         persistentContainer = NSPersistentContainer(name: "RickAndMortyCleanSwift")
         persistentContainer.loadPersistentStores { _, error in
             if let error {
-                print("❌ Core Data Error: Unable to load persistent stores: \(error.localizedDescription)")
+                print("Core Data Error: Unable to load persistent stores: \(error.localizedDescription)")
             }
         }
+        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
     }
     
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
-    
     func saveContext() {
         let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("❌ Core Data Save Error: \(error.localizedDescription)")
-            }
+        guard context.hasChanges else { return }
+        do {
+            try context.save()
+        } catch {
+            print("Core Data Save Error: \(error.localizedDescription)")
         }
     }
     
@@ -56,22 +55,36 @@ final class CoreDataManager {
 
 extension CoreDataManager {
     func saveCharacters(_ characters: [RMCharacter]) {
-        clearCharacters()
-
         persistentContainer.performBackgroundTask { context in
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             for character in characters {
-                let cdCharacter = CDCharacter(context: context)
-                cdCharacter.id = Int64(character.id)
-                cdCharacter.name = character.name
-                cdCharacter.imageURL = character.image
-                cdCharacter.status = character.status
-                cdCharacter.species = character.species
+                let fetchRequest: NSFetchRequest<CDCharacter> = CDCharacter.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %d", character.id)
+
+                do {
+                    let existingCharacters = try context.fetch(fetchRequest)
+                    let cdCharacter = existingCharacters.first ?? CDCharacter(context: context)
+
+                    cdCharacter.id = Int64(character.id)
+                    cdCharacter.name = character.name
+                    cdCharacter.imageURL = character.image
+                    cdCharacter.status = character.status
+                    cdCharacter.species = character.species
+                    
+                    // Save image to FileManager
+                    if let imageURL = URL(string: character.image),
+                       let imageData = try? Data(contentsOf: imageURL) {
+                        ImageCacheManager.shared.saveImage(imageData, id: character.id)
+                    }
+                } catch {
+                    print("CoreData: Error fetching characters: \(error)")
+                }
             }
 
             do {
                 try context.save()
             } catch {
-                print("❌ Failed to save characters: \(error)")
+                print("CoreData: Error saving: \(error)")
             }
         }
     }
@@ -91,7 +104,7 @@ extension CoreDataManager {
                 )
             }
         } catch {
-            print("❌ Failed to fetch characters: \(error)")
+            print("CoreData: Error fetching characters: \(error)")
             return []
         }
     }
@@ -104,7 +117,7 @@ extension CoreDataManager {
             try persistentContainer.viewContext.execute(deleteRequest)
             try persistentContainer.viewContext.save()
         } catch {
-            print("❌ Failed to clear characters: \(error)")
+            print("CoreData: Error clearing characters: \(error)")
         }
     }
 }
